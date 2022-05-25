@@ -1,0 +1,20 @@
+$primary: red;
+
+.cart {
+    &__table {
+        width: 60%;
+        margin: 0 auto;
+
+        &,
+        & th,
+        & td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: right;
+        }
+
+        & th {
+            text-align: center;
+        }
+    }
+}

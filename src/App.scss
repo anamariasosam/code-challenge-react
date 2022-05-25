@@ -1,0 +1,61 @@
+.main {
+    font-family: 'Roboto', sans-serif;
+    background-color: #F9FAFB;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.btn {
+    font-weight: bold;
+    border-radius: 6px;
+    display: flex;
+    border: none;
+    padding: 8px 16px;
+    margin-right: 0;
+    text-decoration: none;
+    font-size: 0.875rem;
+    line-height: 1.4375rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &.primary {
+        background-color: #398DE3;
+        color: #ffffff;
+
+        &:hover,
+        &:focus {
+            background: #0053ba;
+        }
+    }
+
+
+    &.light {
+        background-color: #f8f8f8;
+        color: #4E6374;
+        border: 2px solid #4E6374;
+
+
+        &:hover,
+        &:focus {
+            background: #f8f8f8;
+        }
+    }
+}
+
+
+
+
+
+.btn:focus {
+    outline: 1px solid #fff;
+    outline-offset: -4px;
+}
+
+.btn:active {
+    transform: scale(0.99);
+}
