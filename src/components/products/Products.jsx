@@ -1,85 +1,93 @@
-import { Children, cloneElement, useContext } from 'react';
-import { StoreContext } from '../../utils/StoreContext';
-import './Products.scss';
+import { Children, cloneElement, useContext } from 'react'
+import { StoreContext } from '../../utils/StoreContext'
+import Button from '../common/button/Button'
+import './Products.scss'
 
-const Product = ({ product, children }) => {
-  const { image, price, description, name } = product;
+const ProductOptions = ({ children = [], productId }) => {
   return (
-    <figure className="product">
-      {image ? (
-        <img src={`${image}`} alt={description} className="product__image" />
-      ) : (
-        <div className="product__image product__image--empty"></div>
-      )}
+    <div className="product__buttons">
+      {children.map(({ icon, title, extraClass, click, toggle, toggleFn }) => {
+        return (
+          <Button
+            key={click.name}
+            onClickFn={() => click(productId)}
+            icon={icon}
+            toggle={toggle}
+            toggleFn={toggleFn ? () => toggleFn(productId) : null}
+            extraClass={extraClass}
+          >
+            {title}
+          </Button>
+        )
+      })}
+    </div>
+  )
+}
+
+const ProductCard = ({ product: { image, price, name, id }, children }) => {
+  const imgSrc = image ?? './image.png'
+  return (
+    <figure className="product col-md-3">
+      <img src={`${imgSrc}`} alt={name} className="product__image" />
       <figcaption className="product__description">
         <p className="product__title">{name}</p>
-        <div className="product__price">
-          <p className="italic">Your Price</p>
-          <h3>${price}</h3>
+        <div className="product-price">
+          <p className="product-price__text">Your Price</p>
+          <p className="product-price__value">${price}</p>
         </div>
-        {Children.map(children, child =>
+        {Children.map(children, (child) =>
           cloneElement(child, {
-            product,
+            productId: id,
           })
         )}
       </figcaption>
     </figure>
-  );
-};
+  )
+}
 
-const ProductOptions = ({ children = [], product }) => {
-  return (
-    <div className="product__buttons">
-      {children.map(option => {
-        return (
-          <button
-            key={option.click}
-            onClick={() => option.click(product)}
-            className={`btn ${option.extraClass ?? ''}`}
-          >
-            {option.icon && (
-              <img src={`./icons/${option.icon}.svg`} alt={option.icon} />
-            )}
-            {option.title}
-          </button>
-        );
-      })}
-    </div>
-  );
-};
-
-Product.displayName = 'Product';
-Product.Options = ProductOptions;
+ProductCard.Options = ProductOptions
 
 const Products = () => {
   const {
     products: productsList,
     addToCart,
     addToFavorites,
-  } = useContext(StoreContext);
+    removeFromFavorites,
+  } = useContext(StoreContext)
 
   const options = [
     {
       click: addToFavorites,
+      toggleFn: removeFromFavorites,
       icon: 'favorite',
-      extraClass: 'light',
     },
     {
       click: addToCart,
-      title: 'Add to Cart',
+      title: 'Add To Cart',
       extraClass: 'primary',
     },
-  ];
+  ]
 
   return (
     <div className="products">
-      {productsList.map(product => (
-        <Product key={product.id} product={product}>
-          <Product.Options>{options}</Product.Options>
-        </Product>
-      ))}
-    </div>
-  );
-};
+      {productsList.length > 0
+        ? productsList.map((product, index) => {
+            /* const product = {
+              id: index,
+              image: './image.png',
+              price: '24.18',
+              name: 'This is some double line text of the product title for the card...',
+            } */
 
-export default Products;
+            return (
+              <ProductCard key={product.id} product={product}>
+                <ProductCard.Options>{options}</ProductCard.Options>
+              </ProductCard>
+            )
+          })
+        : 'No Products'}
+    </div>
+  )
+}
+
+export default Products

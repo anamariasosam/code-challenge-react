@@ -1,0 +1,18 @@
+@use './styles/_normalize';
+@use './styles/_icons';
+@use './styles/_utils';
+@use './styles/grid';
+@import './styles/fonts';
+@import './styles/vars';
+
+
+html,
+body,
+.main {
+  font-family: 'Roboto', sans-serif;
+  font-size: $base-font-size;
+}
+
+header {
+  margin-top: 99px;
+}

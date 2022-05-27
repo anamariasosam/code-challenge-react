@@ -1,17 +1,17 @@
-import Cart from './components/cart/Cart';
-import Products from './components/products/Products';
-import { StoreProvider } from './utils/StoreContext';
-import './App.scss';
+// import Cart from './components/cart/Cart'
+import BaseLayout from './components/layouts/BaseLayout'
+import Home from './routes/home/Home'
+import { StoreProvider } from './utils/StoreContext'
+import './_styles.scss'
 
 function App() {
   return (
     <StoreProvider>
-      <Cart />
-      <section className="main">
-        <Products />
-      </section>
+      <BaseLayout>
+        <Home />
+      </BaseLayout>
     </StoreProvider>
-  );
+  )
 }
 
-export default App;
+export default App

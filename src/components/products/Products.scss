@@ -1,82 +1,86 @@
-$default-size: 220px;
-
-$sow-white: #FFFFFF;
+@import '../../styles/palette';
+@import '../../styles/vars';
+@import '../../styles/functions';
 
 .products {
-
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc-rem(24px);
 }
 
+$border-width: calc-rem(1px);
+$default-size: calc-rem(16px);
+
 .product {
-    & {
-        max-width: $default-size;
-        border: 1px solid #CAD2D8;
-        border-radius: 12px;
-        background-color: $sow-white;
+  display: flex;
+  flex-direction: column;
+  border: $border-width solid $border-color;
+  margin: 0;
+  min-width: calc-rem(216px);
+  border-radius: calc-rem(12px);
+  background-color: $sow_white;
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    padding: $default-size;
+    padding-top: $default-size - $border-width;
+    height: 100%;
+    color: $sow_grey_6;
+    border-top: $border-width solid $border-color;
+  }
+
+  &__title {
+    flex: 2;
+    line-height: calc-rem(24px);
+    font-size: $default-size;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    margin-top: calc-rem(24px);
+    gap: $default-size;
+  }
+
+  &-price {
+    display: flex;
+    align-self: flex-end;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    margin-top: $default-size;
+
+    &__text,
+    &__value {
+      margin: 0;
     }
 
-    &__title {
-        line-height: 24px;
-        font-size: 1rem;
-        margin: 0;
-        min-height: 100px;
+    &__text {
+      font-weight: 400;
+      font-size: calc-rem(14px);
+      line-height: calc-rem(20px);
+      margin-right: $default-size;
+      font-style: italic;
+      position: relative;
+      bottom: calc-rem(1px);
     }
 
-    &__buttons {
-        display: flex;
-        justify-content: flex-end;
-        flex-wrap: wrap;
-        margin-top: 16px;
-        gap: 16px
+    &__value {
+      font-weight: 700;
+      font-size: calc-rem(24px);
+      line-height: calc-rem(30px);
     }
+  }
 
-    &__description {
-        height: 100%;
-        padding: 16px;
-
-        display: flex;
-
-        flex-direction: column;
-        // justify-content: space-between;
-        color: #4E6374;
-        border-top: 1px solid #CAD2D8;
-        gap: 16px;
-    }
-
-    &__price {
-        align-self: flex-end;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-end;
-        gap: 16px;
-
-        & p {
-            font-size: 0.875rem;
-            margin: 0;
-        }
-
-        & h3 {
-            font-size: 1.5rem;
-            margin: 0;
-        }
-    }
-
-    &__image {
-        width: calc(100% - 32px);
-        margin: 16px auto;
-        background: #ccc;
-        display: block;
-        height: auto;
-
-        &--empty {
-            margin: 16px;
-            width: $default-size - 32px;
-            height: $default-size - 32px;
-        }
-    }
-
-
-
+  &__image {
+    width: calc(100% - 65px);
+    margin-top: $default-size - $border-width;
+    margin-bottom: $default-size;
+    background: #ccc;
+    display: block;
+    align-self: center;
+  }
 }

@@ -1,0 +1,16 @@
+@import './palette';
+@import './functions';
+
+.italic {
+  font-style: italic;
+}
+
+.section {
+  &__title {
+    font-weight: 700;
+    font-size: calc-rem(24px);
+    line-height: calc-rem(30px);
+    margin: calc-rem(24px) 0;
+    color: $sow_grey_6;
+  }
+}

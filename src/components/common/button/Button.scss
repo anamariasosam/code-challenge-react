@@ -1,0 +1,41 @@
+@import '../../../styles/palette';
+@import '../../../styles/functions';
+
+$border-width: calc-rem(2px);
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc-rem(8px);
+  border-radius: calc-rem(6px);
+  padding: calc(calc-rem(8px) - $border-width) calc(calc-rem(16px) - $border-width);
+  font-size: calc-rem(14px);
+  line-height: calc-rem(24px);
+  font-weight: 500;
+  background-color: $sow_white;
+  color: $sow_grey_6;
+  border: $border-width solid $sow_grey_6;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &--icon {
+    padding: calc-rem(8px);
+  }
+
+
+  &.primary {
+    border: none;
+    padding: calc(calc-rem(8px)) calc(calc-rem(16px));
+    background-color: $sow_blue;
+    color: $sow_white;
+
+    &:hover {
+      background-color: $sow_blue_dark;
+    }
+  }
+}

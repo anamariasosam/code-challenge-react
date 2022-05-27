@@ -1,0 +1,7 @@
+@import '../../styles/functions';
+@import '../../styles/palette';
+
+.baseLayout {
+  background-color: $sow_grey_7;
+  padding: calc-rem(25px) calc(10% + calc-rem(6px));
+}
