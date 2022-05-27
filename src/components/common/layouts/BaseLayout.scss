@@ -1,5 +1,10 @@
-@import '../../styles/functions';
-@import '../../styles/palette';
+@import '../../../styles/functions';
+@import '../../../styles/palette';
+
+
+main {
+  min-width: 0;
+}
 
 .baseLayout {
   background-color: $sow_grey_7;

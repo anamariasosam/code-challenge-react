@@ -1,9 +1,9 @@
 @use './styles/_normalize';
 @use './styles/_icons';
 @use './styles/_utils';
-@use './styles/grid';
 @import './styles/fonts';
 @import './styles/vars';
+@import './styles/palette';
 
 
 html,
@@ -11,6 +11,7 @@ body,
 .main {
   font-family: 'Roboto', sans-serif;
   font-size: $base-font-size;
+  background-color: $sow_grey_7;
 }
 
 header {

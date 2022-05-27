@@ -24,13 +24,15 @@ const ProductOptions = ({ children = [], productId }) => {
   )
 }
 
+const placeHolderImgSrc = './images/product-placeholder.png'
+
 const ProductCard = ({ product: { image, price, name, id }, children }) => {
-  const imgSrc = image ?? './image.png'
+  const imgSrc = image ?? placeHolderImgSrc
   return (
-    <figure className="product col-md-3">
+    <figure className="product  xl-col-3 lg-col-4  md-col-4 sm-col-6 xs-col-6">
       <img src={`${imgSrc}`} alt={name} className="product__image" />
       <figcaption className="product__description">
-        <p className="product__title">{name}</p>
+        <p className="product__title truncate-overflow">{name}</p>
         <div className="product-price">
           <p className="product-price__text">Your Price</p>
           <p className="product-price__value">${price}</p>
@@ -72,12 +74,14 @@ const Products = () => {
     <div className="products">
       {productsList.length > 0
         ? productsList.map((product, index) => {
-            /* const product = {
+            {
+              /* const product = {
               id: index,
               image: './image.png',
               price: '24.18',
               name: 'This is some double line text of the product title for the card...',
             } */
+            }
 
             return (
               <ProductCard key={product.id} product={product}>

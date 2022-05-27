@@ -2,21 +2,24 @@
 @import '../../styles/vars';
 @import '../../styles/functions';
 
-.products {
-  display: flex;
-  flex-wrap: wrap;
-  gap: calc-rem(24px);
-}
-
 $border-width: calc-rem(1px);
 $default-size: calc-rem(16px);
 
+.products {
+  display: grid;
+  gap: calc-rem(24px);
+  grid-template-columns: repeat(auto-fit, minmax(calc-rem(250px), 1fr));
+}
+
+
 .product {
+  $self: &;
+
   display: flex;
   flex-direction: column;
   border: $border-width solid $border-color;
   margin: 0;
-  min-width: calc-rem(216px);
+  height: 100%;
   border-radius: calc-rem(12px);
   background-color: $sow_white;
 
@@ -31,8 +34,12 @@ $default-size: calc-rem(16px);
   }
 
   &__title {
+    $title-lh: calc-rem(24px);
+    $title-max-lines: 4;
     flex: 2;
-    line-height: calc-rem(24px);
+    line-height: $title-lh;
+    max-height: calc($title-lh * $title-max-lines);
+    overflow: hidden;
     font-size: $default-size;
     font-weight: 500;
     margin: 0;
@@ -76,7 +83,7 @@ $default-size: calc-rem(16px);
   }
 
   &__image {
-    width: calc(100% - 65px);
+    max-width: calc(100% - calc-rem(65px));
     margin-top: $default-size - $border-width;
     margin-bottom: $default-size;
     background: #ccc;

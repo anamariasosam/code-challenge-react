@@ -1,5 +1,5 @@
-import Header from '../common/header/Header'
-import NavBar from '../common/navBar/NavBar'
+import Header from '../header/Header'
+import NavBar from '../navBar/NavBar'
 import './BaseLayout.scss'
 
 const BaseLayout = ({ children }) => {
@@ -7,7 +7,7 @@ const BaseLayout = ({ children }) => {
     <>
       <Header />
       <NavBar />
-      <div className="baseLayout">{children}</div>
+      <main className="baseLayout">{children}</main>
     </>
   )
 }
