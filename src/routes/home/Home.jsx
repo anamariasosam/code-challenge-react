@@ -1,10 +1,10 @@
 import Section from '../../components/common/layouts/section/Section'
-import ProductsList from '../../components/products/ProductsList'
+import ProductsGrid from '../../components/products/productcsGrid/ProductsGrid'
 
 const Home = () => {
   return (
     <Section title="Promos">
-      <ProductsList />
+      <ProductsGrid />
     </Section>
   )
 }

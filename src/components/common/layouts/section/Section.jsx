@@ -1,4 +1,4 @@
-import './Section.scss'
+import './_Section.scss'
 
 const Section = ({ title, children }) => {
   return (

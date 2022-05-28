@@ -1,20 +1,6 @@
 import { Button } from '../button/Button'
-import './Navbar.scss'
-
-const Searchbar = ({ onChange }) => {
-  return (
-    <div className="searchbar">
-      <i className="fu fu__search searchbar__icon"></i>
-      <input
-        type="text"
-        className="searchbar__input"
-        name="searchText"
-        onChange={onChange}
-        placeholder="Search by product name, manufacturer, SKU, keyword..."
-      />
-    </div>
-  )
-}
+import Searchbar from '../searchBar/SearchBar'
+import './_Navbar.scss'
 
 const Navbar = () => {
   const searchItem = (e) => {
@@ -22,10 +8,10 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" role="navigation">
       <Searchbar onSubmit={searchItem} onChange={searchItem}></Searchbar>
-      <ul className="navbar__links">
-        <li className="navbar__item">
+      <ul className="navbar__links" role="menubar">
+        <li className="navbar__item" role="menuitem">
           <Button
             onClickFn={(a) => {
               console.log(a)
@@ -40,7 +26,7 @@ const Navbar = () => {
             Favourites
           </Button>
         </li>
-        <li className="navbar__item">
+        <li className="navbar__item" role="menuitem">
           <Button
             onClickFn={(a) => {
               console.log(a)

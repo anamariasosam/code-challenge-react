@@ -1,0 +1,31 @@
+@use '../../../styles/palette' as *;
+@use '../../../styles/vars' as *;
+@import '../../../styles/functions';
+
+.searchbar {
+  display: flex;
+
+  &__input {
+    padding: $default-size calc-rem(8px);
+    padding-right: calc-rem(24px);
+    height: 100%;
+    font-weight: 500;
+    font-size: $default-size;
+    line-height: calc-rem(24px);
+    background-color: $sow_white;
+    color: $sow_grey_6;
+    outline: 0;
+    border: calc-rem(1px) solid $border-color;
+
+    &::placeholder {
+      font-size: $default-size;
+      color: #ABB9C4;
+      opacity: 1;
+    }
+  }
+
+  &__icon {
+    align-self: center;
+    margin-left: calc-rem(18px);
+  }
+}

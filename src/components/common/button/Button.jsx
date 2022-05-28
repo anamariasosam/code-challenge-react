@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import './Button.scss'
+import './_Button.scss'
 
 const handleOnClick = (toggle, onClickFn, toggleFn) => {
   if (toggle) {

@@ -1,6 +1,6 @@
 import Header from '../../header/Header'
 import Navbar from '../../navbar/Navbar'
-import './BaseLayout.scss'
+import './_BaseLayout.scss'
 
 const BaseLayout = ({ children }) => {
   return (

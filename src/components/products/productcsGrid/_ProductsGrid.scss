@@ -1,0 +1,29 @@
+@use '../../../styles/palette' as *;
+@use '../../../styles/vars' as *;
+@import '../../../styles/functions';
+
+.productsGrid {
+  display: grid;
+  gap: calc-rem(24px);
+  grid-template-columns: repeat(auto-fit, minmax(calc-rem(250px), 1fr));
+
+  &--empty {
+    margin: 0 5%;
+    padding: calc-rem(32px);
+    background-color: $sow_grey_6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__message {
+    color: $sow_white;
+    font-size: calc-rem(48px);
+    line-height: calc-rem(30px);
+  }
+
+  &__placeholder {
+    width: calc-rem(60px);
+    height: calc-rem(60px);
+  }
+}

@@ -2,13 +2,15 @@
 @use '../../../styles/vars' as *;
 @import '../../../styles/functions';
 
+$button-border-width: calc-rem(2px);
+
 .button {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: calc-rem(10px);
   border-radius: calc-rem(6px);
-  padding: calc(calc-rem(8px) - $button-border-width) calc(calc-rem(16px) - $button-border-width);
+  padding: calc(calc-rem(8px) - $button-border-width) calc($default-size - $button-border-width);
   font-size: calc-rem(14px);
   line-height: calc-rem(24px);
   font-weight: 500;
@@ -28,7 +30,7 @@
 
   &__primary {
     border: none;
-    padding: calc-rem(8px) calc-rem(16px);
+    padding: calc-rem(8px) $default-size;
     background-color: $sow_blue;
     color: $sow_white;
 

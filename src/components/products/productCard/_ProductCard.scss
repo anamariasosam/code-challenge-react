@@ -1,12 +1,8 @@
-@use '../../styles/palette' as *;
-@use '../../styles/vars' as *;
-@import '../../styles/functions';
+@use '../../../styles/palette' as *;
+@use '../../../styles/vars' as *;
+@import '../../../styles/functions';
 
-.products {
-  display: grid;
-  gap: calc-rem(24px);
-  grid-template-columns: repeat(auto-fit, minmax(calc-rem(250px), 1fr));
-}
+$border-width: calc-rem(1px);
 
 .productCard {
   display: flex;
@@ -16,11 +12,13 @@
   height: 100%;
   border-radius: calc-rem(12px);
   background-color: $sow_white;
+  padding-top: calc($default-size - $border-width);
+  padding-bottom: $default-size;
+
 
   &__image {
-    max-width: calc(100% - calc-rem(65px));
-    margin-top: $default-size - $border-width;
-    margin-bottom: $default-size;
+    max-width: calc(100% - calc-rem(32px));
+    margin-bottom: calc-rem(15px);
     background: #ccc;
     display: block;
     align-self: center;
@@ -30,10 +28,11 @@
     display: flex;
     flex-direction: column;
     padding: $default-size;
-    padding-top: $default-size - $border-width;
+    padding-bottom: 0;
     height: 100%;
     color: $sow_grey_6;
     border-top: $border-width solid $border-color;
+
   }
 
   &__title {
@@ -60,6 +59,7 @@
   &__text,
   &__price {
     margin: 0;
+
   }
 
   &__text {

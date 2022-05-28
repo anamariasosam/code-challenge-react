@@ -3,35 +3,40 @@
 $icons: (
   'favorite-border': "favorite-border",
   'favorite-fill': "favorite-fill",
+  'favorite': "favorite-fill",
   'cart': 'cart',
-  'search': 'search'
+  'search': 'search',
+  'sowingo-icon': 'sowingo-icon'
 );
+
+@mixin addIcon($iconName) {
+  &__#{$iconName} {
+    background-image: get-icon($iconName);
+  }
+}
 
 .fu {
   display: block;
-  height: calc-rem(20px);
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: bottom center, 50%, 50%;
-  width: calc-rem(20px);
+  min-height: calc-rem(20px);
+  min-width: calc-rem(20px);
+
+  @include addIcon("cart");
+  @include addIcon("search");
+  @include addIcon("search");
+  @include addIcon("sowingo-icon");
 
   &__favorite {
-    background-image: get-icon("favorite-fill");
+
+    &,
+    &--off {
+      background-image: get-icon("favorite-fill");
+    }
 
     &--on {
       background-image: get-icon("favorite-border");
     }
-
-    &--off {
-      background-image: get-icon("favorite-fill");
-    }
-  }
-
-  &__cart {
-    background-image: get-icon("cart");
-  }
-
-  &__search {
-    background-image: get-icon("search");
   }
 }

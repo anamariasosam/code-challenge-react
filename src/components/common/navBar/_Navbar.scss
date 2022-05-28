@@ -36,58 +36,24 @@
 
   & .searchbar {
     outline: calc-rem(1px) solid $border-color;
-    margin: 0 1px;
-    gap: 3px;
+    margin: 0 calc-rem(1px);
+    gap: calc-rem(3px);
     flex: 4;
 
     &__input {
-      width: calc(100% - 2px);
+      width: calc(100% - calc-rem(2px));
       border: none;
     }
   }
 
   @media (max-width: 768px) {
-    & {
-
-      & .searchbar {
-        border: calc-rem(1px) solid $border-color;
-        outline: none;
-        flex: none;
-        width: calc(100% + 2px);
-        margin: 0;
-        margin-top: -1px;
-      }
+    & .searchbar {
+      border: calc-rem(1px) solid $border-color;
+      outline: none;
+      flex: none;
+      width: calc(100% + 2px);
+      margin: 0;
+      margin-top: -1px;
     }
   }
-}
-
-.searchbar {
-  display: flex;
-
-  &__input {
-    padding: $default-size 8px;
-    height: 100%;
-    font-weight: 500;
-    font-size: $default-size;
-    line-height: 24px;
-    background-color: $sow_white;
-    color: $sow_grey_6;
-
-
-    &::placeholder {
-      color: #ABB9C4;
-      opacity: 1;
-    }
-  }
-
-  &__icon {
-    align-self: center;
-    margin-left: 18px;
-  }
-}
-
-
-input {
-  outline: 0;
-  border: calc-rem(1px) solid $border-color;
 }
