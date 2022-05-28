@@ -7,11 +7,6 @@ $icons: (
   'search': 'search'
 );
 
-@function get-icon($icon-name) {
-  $iconsUrl: "../static/icons/";
-  @return url($iconsUrl + $icon-name + ".svg")
-}
-
 .fu {
   display: block;
   height: calc-rem(20px);

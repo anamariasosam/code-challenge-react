@@ -3,5 +3,5 @@
 
 .baseLayout {
   background-color: $sow_grey_7;
-  padding: calc-rem(24px) calc(10% + calc-rem(6px));
+  @include layout-offest(25px, 25px);
 }
