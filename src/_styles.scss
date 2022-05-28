@@ -1,10 +1,9 @@
-@use './styles/_normalize';
-@use './styles/_icons';
-@use './styles/_utils';
-@import './styles/fonts';
-@import './styles/vars';
-@import './styles/palette';
+@use './styles/palette' as *;
+@use './styles/vars' as *;
+@use './styles/normalize';
+@use './styles/icons';
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 html,
 body,
@@ -12,8 +11,4 @@ body,
   font-family: 'Roboto', sans-serif;
   font-size: $base-font-size;
   background-color: $sow_grey_7;
-}
-
-header {
-  margin-top: 99px;
 }

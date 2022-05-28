@@ -1,9 +1,5 @@
-@import './palette';
-@import './functions';
-
-.italic {
-  font-style: italic;
-}
+@use '../../../../styles/palette' as *;
+@import '../../../../styles/functions';
 
 .section {
   &__title {

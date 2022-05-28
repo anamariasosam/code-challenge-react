@@ -1,11 +1,11 @@
-import Products from '../../components/products/Products'
+import Section from '../../components/common/layouts/section/Section'
+import ProductsList from '../../components/products/ProductsList'
 
 const Home = () => {
   return (
-    <section>
-      <h2 className="section__title">Promos</h2>
-      <Products />
-    </section>
+    <Section title="Promos">
+      <ProductsList />
+    </Section>
   )
 }
 

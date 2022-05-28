@@ -13,7 +13,7 @@ export const StoreProvider = ({ children }) => {
   const cartTotal = useMemo(() => Number(calculateCartTotal(cartItems)).toFixed(2), [cartItems])
 
   const addToCart = (product) => {
-    console.log('addToCart')
+    console.log('addToCart', product)
     const quantity = (cartItems[product.id]?.quantity ?? 0) + 1
     const updatedProduct = {
       ...product,
@@ -42,7 +42,7 @@ export const StoreProvider = ({ children }) => {
   }, [])
 
   const addToFavorites = async (product) => {
-    console.log('addToFavorites')
+    console.log('addToFavorites', product)
     const data = {
       id: '5DPzct4f2guBF5dD2LKxpS',
 

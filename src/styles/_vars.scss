@@ -1,1 +1,6 @@
+@import './functions';
+
 $base-font-size: 16px;
+$border-width: calc-rem(1px);
+$default-size: calc-rem(16px);
+$button-border-width: calc-rem(2px);

@@ -1,5 +1,3 @@
-@import './vars';
-
 @function calc-rem($size) {
-  @return calc($size / $base-font-size) * 1rem;
+  @return calc($size / 16px) * 1rem;
 }

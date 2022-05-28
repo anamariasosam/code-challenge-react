@@ -1,9 +1,6 @@
-@import '../../styles/palette';
-@import '../../styles/vars';
+@use '../../styles/palette' as *;
+@use '../../styles/vars' as *;
 @import '../../styles/functions';
-
-$border-width: calc-rem(1px);
-$default-size: calc-rem(16px);
 
 .products {
   display: grid;
@@ -11,10 +8,7 @@ $default-size: calc-rem(16px);
   grid-template-columns: repeat(auto-fit, minmax(calc-rem(250px), 1fr));
 }
 
-
-.product {
-  $self: &;
-
+.productCard {
   display: flex;
   flex-direction: column;
   border: $border-width solid $border-color;
@@ -23,7 +17,16 @@ $default-size: calc-rem(16px);
   border-radius: calc-rem(12px);
   background-color: $sow_white;
 
-  &__description {
+  &__image {
+    max-width: calc(100% - calc-rem(65px));
+    margin-top: $default-size - $border-width;
+    margin-bottom: $default-size;
+    background: #ccc;
+    display: block;
+    align-self: center;
+  }
+
+  &__info {
     display: flex;
     flex-direction: column;
     padding: $default-size;
@@ -45,49 +48,39 @@ $default-size: calc-rem(16px);
     margin: 0;
   }
 
-  &__buttons {
-    display: flex;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    margin-top: calc-rem(24px);
-    gap: $default-size;
-  }
-
-  &-price {
+  &__box {
     display: flex;
     align-self: flex-end;
     flex-wrap: wrap;
     align-items: flex-end;
     margin-top: $default-size;
 
-    &__text,
-    &__value {
-      margin: 0;
-    }
-
-    &__text {
-      font-weight: 400;
-      font-size: calc-rem(14px);
-      line-height: calc-rem(20px);
-      margin-right: $default-size;
-      font-style: italic;
-      position: relative;
-      bottom: calc-rem(1px);
-    }
-
-    &__value {
-      font-weight: 700;
-      font-size: calc-rem(24px);
-      line-height: calc-rem(30px);
-    }
   }
 
-  &__image {
-    max-width: calc(100% - calc-rem(65px));
-    margin-top: $default-size - $border-width;
-    margin-bottom: $default-size;
-    background: #ccc;
-    display: block;
-    align-self: center;
+  &__text,
+  &__price {
+    margin: 0;
+  }
+
+  &__text {
+    font-weight: 400;
+    font-size: calc-rem(14px);
+    line-height: calc-rem(20px);
+    margin-right: $default-size;
+    font-style: italic;
+    position: relative;
+    bottom: calc-rem(1px);
+  }
+
+  &__price {
+    font-weight: 700;
+    font-size: calc-rem(24px);
+    line-height: calc-rem(30px);
+  }
+
+  &__buttons {
+    justify-content: flex-end;
+    margin-top: calc-rem(24px);
+    gap: $default-size
   }
 }
