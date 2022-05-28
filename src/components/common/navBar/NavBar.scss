@@ -1,92 +1,73 @@
 @use '../../../styles/palette' as *;
+@use '../../../styles/vars' as *;
 @import '../../../styles/functions';
 
-$offset: calc-rem(-1px);
 
 .navbar {
   display: flex;
   flex-wrap: wrap;
-  margin-top: $offset;
-  align-items: center;
   justify-content: space-evenly;
   padding: 0 calc(10% + calc-rem(5px));
   background-color: $sow_white;
-  border: calc-rem(1px) solid $border-color;
-  border-bottom: none;
+  outline: calc-rem(1px) solid $border-color;
 
   &__links {
     flex: 1;
     margin: 0;
-    margin-top: $offset;
-    margin-left: $offset;
     padding: 0;
     display: flex;
     list-style: none;
   }
 
   &__item {
-    flex: 1;
-    border: calc-rem(1px) solid $border-color;
-
-    &:nth-child(1) {
-      border-right: none;
-    }
+    outline: calc-rem(1px) solid $border-color;
+    width: 100%;
 
     & .button {
       border: none;
-      height: 100%;
-      padding: calc-rem(16px) calc-rem(25px);
+      border-radius: 0;
+      padding: $default-size calc-rem(26px);
       font-weight: 500;
-      font-size: calc-rem(16px);
+      font-size: $default-size;
       line-height: calc-rem(24px);
     }
   }
 
   & .searchbar {
-    margin-top: $offset;
+    outline: calc-rem(1px) solid $border-color;
+    margin-left: 2px;
+    gap: 3px;
     flex: 4;
 
     &__input {
-      border-width: 0 1px;
-      border-color: $border-color;
-      border-style: solid;
+      width: calc(100% - 2px);
+      border: none;
     }
   }
 
   @media (max-width: 768px) {
     & {
 
-      & .searchbar,
-      &__links,
-      &__item {
-        width: 100%;
-      }
-
-      &__links,
       & .searchbar {
-        margin: 0;
-      }
-
-      & .searchbar {
-        border-width: 0 1px;
-        border-color: $border-color;
-        border-style: solid;
+        border: calc-rem(1px) solid $border-color;
+        outline: none;
         flex: none;
+        width: calc(100% + 2px);
+        margin-left: 0;
+        margin-top: -1px;
       }
     }
   }
 }
 
 .searchbar {
-  position: relative;
+  display: flex;
 
   &__input {
-    padding: 18px 16px;
-    padding-left: 48px;
+    padding: $default-size 8px;
     height: 100%;
-    width: 100%;
     font-weight: 500;
-    font-size: 16px;
+    font-size: $default-size;
     line-height: 24px;
     background-color: $sow_white;
     color: $sow_grey_6;
@@ -99,13 +80,13 @@ $offset: calc-rem(-1px);
   }
 
   &__icon {
-    position: absolute;
-    top: calc(30% + 2px);
-    left: 19px;
+    align-self: center;
+    margin-left: 18px;
   }
 }
 
 
 input {
   outline: 0;
+  border: calc-rem(1px) solid $border-color;
 }

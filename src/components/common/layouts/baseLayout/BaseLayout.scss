@@ -3,7 +3,5 @@
 
 .baseLayout {
   background-color: $sow_grey_7;
-  padding: calc-rem(23px) calc(10% + calc-rem(6px));
-  border-top: calc-rem(1px) solid $border-color;
-  margin-top: calc-rem(-1px);
+  padding: calc-rem(24px) calc(10% + calc-rem(6px));
 }
