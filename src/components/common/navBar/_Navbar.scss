@@ -32,6 +32,13 @@
       line-height: calc-rem(24px);
       width: 100%;
     }
+
+    &--active {
+      outline-offset: calc-rem(-2px);
+      outline-width: calc-rem(2px);
+      margin-right: calc-rem(1px);
+      outline-color: $sow_grey_6;
+    }
   }
 
   & .searchbar {

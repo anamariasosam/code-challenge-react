@@ -32,11 +32,12 @@ $icons: (
 
     &,
     &--off {
-      background-image: get-icon("favorite-fill");
+      background-image: get-icon("favorite-border");
     }
 
     &--on {
-      background-image: get-icon("favorite-border");
+      background-image: get-icon("favorite-fill");
+
     }
   }
 }

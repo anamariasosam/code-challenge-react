@@ -32,9 +32,13 @@ class Api {
 
   post = (resource, data) => {
     const id = resource ?? this.apiData.endpoints.default
-    // return this.productsApi.post(`${this.apiData.endpoints[id]}`, data);
+    // return this.productsApi.post(`${this.apiData.endpoints[id]}`, data)
 
-    return Promise.resolve({ data: true, status: SERVER_STATUS.OK })
+    return new Promise((res) => {
+      setTimeout(() => {
+        res({ data: { favorite: true }, status: SERVER_STATUS.OK })
+      }, 1000)
+    })
   }
 }
 

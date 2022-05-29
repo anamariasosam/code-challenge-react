@@ -4,7 +4,7 @@ import './_ProductCard.scss'
 
 const placeholderImgSrc = './images/product-placeholder.png'
 
-const ProductCard = ({ product: { image, price, name, id }, children }) => {
+const ProductCard = ({ product: { image, price, name, id, favorite }, children }) => {
   const imgSrc = image ?? placeholderImgSrc
   return (
     <figure className="productCard">
@@ -18,10 +18,9 @@ const ProductCard = ({ product: { image, price, name, id }, children }) => {
         {Children.map(children, (child) =>
           cloneElement(child, {
             fnArguments: {
-              id,
-              name,
-              price,
+              productId: id,
             },
+            initialToggle: favorite,
             extraClass: 'productCard__buttons',
           })
         )}

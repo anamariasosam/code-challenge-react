@@ -9,41 +9,52 @@ const handleOnClick = (toggle, onClickFn, toggleFn) => {
   }
 }
 
-const handleToggleChange = (result, cbFn) => {
+const handleToggleChange = (result, onToggleChangeCb, disabledCb) => {
   const getToggleValue = (oldToggle, value) => (value ? !oldToggle : oldToggle)
 
   if (result !== undefined) {
     if (result instanceof Promise) {
+      disabledCb(true)
+      onToggleChangeCb((oldToggle) => !oldToggle)
+
+      // Wait until response to reflect the actual value
       result.then((value) => {
-        cbFn((oldToggle) => getToggleValue(oldToggle, value))
+        disabledCb(false)
+        onToggleChangeCb((oldToggle) => getToggleValue(oldToggle, !value))
       })
     } else {
-      cbFn((oldToggle) => getToggleValue(oldToggle, result))
+      onToggleChangeCb((oldToggle) => getToggleValue(oldToggle, result))
     }
   } else {
-    cbFn((oldToggle) => !oldToggle)
+    onToggleChangeCb((oldToggle) => !oldToggle)
   }
 }
 
 export const Button = ({
-  onClickFn,
+  onClickFn = () => {},
   type,
   icon,
   title,
   children,
   toggleFn,
   toggleIcon = true,
+  initialToggle = true,
   fnArguments,
 }) => {
-  const [toggle, setToggle] = useState(true)
-  const iconClass = toggleIcon ? `fu__${icon}--${toggle ? 'on' : 'off'}` : `fu__${icon}`
-
+  const [toggle, setToggle] = useState(initialToggle)
+  const iconClass = toggleIcon ? `fu__${icon}--${toggle ? 'off' : 'on'}` : `fu__${icon}`
+  const [disabled, setDisabled] = useState()
   const onClick = useCallback(() => {
-    handleToggleChange(handleOnClick(toggle, onClickFn, toggleFn)(fnArguments), setToggle)
+    handleToggleChange(
+      handleOnClick(toggle, onClickFn, toggleFn)(fnArguments),
+      setToggle,
+      setDisabled
+    )
   }, [toggle, onClickFn, toggleFn, fnArguments])
 
   return (
     <button
+      disabled={disabled}
       onClick={onClick}
       className={`button ${type ? `button__${type}` : ''} ${icon ? 'button--icon' : ''}`}
     >
@@ -54,7 +65,7 @@ export const Button = ({
   )
 }
 
-export const ButtonList = ({ children = [], fnArguments, extraClass }) => {
+export const ButtonList = ({ children = [], fnArguments, initialToggle, extraClass }) => {
   return (
     <div className={`buttonList ${extraClass ?? ''}`}>
       {children.map(({ icon, title, type, onClick, toggleFn }) => {
@@ -66,6 +77,7 @@ export const ButtonList = ({ children = [], fnArguments, extraClass }) => {
             toggleFn={toggleFn ? toggleFn : null}
             type={type}
             fnArguments={fnArguments}
+            initialToggle={initialToggle}
           >
             {title}
           </Button>
