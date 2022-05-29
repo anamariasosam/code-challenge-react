@@ -10,3 +10,10 @@ export const debounce = (func, wait = 500) => {
   }
 }
 
+export const removeExtraSpaces = (search) => {
+  return search.replace(/\s\s+/g, ' ').trim()
+}
+
+export const toLowerCase = (keywords) => {
+  return keywords.map((keyword) => keyword.toString().toLowerCase())
+}

@@ -9,6 +9,7 @@ import {
   addToFavorites,
   removeFromFavorites,
 } from 'utils/productsUtils'
+import { removeExtraSpaces } from 'utils/searchUtils'
 
 const StoreContext = createContext()
 
@@ -34,10 +35,11 @@ const StoreProvider = ({ children }) => {
     products: [],
   })
   const [filter, setFilter] = useState(FILTER.DEFAULT)
+  const [search, setSearch] = useState('')
   const cartTotal = useMemo(() => calculateCartTotal(state.products), [state.products])
   const gridProducts = useMemo(
-    () => getGridProducts(state.products, filter),
-    [state.products, filter]
+    () => getGridProducts(state.products, filter, search),
+    [state.products, filter, search]
   )
 
   useEffect(() => {
@@ -49,9 +51,7 @@ const StoreProvider = ({ children }) => {
   }
 
   const filterBySearch = (searchKeyWord) => {
-    console.log('handle search')
-    console.log(searchKeyWord)
-    console.log(state.products)
+    setSearch(removeExtraSpaces(searchKeyWord))
   }
 
   const value = {

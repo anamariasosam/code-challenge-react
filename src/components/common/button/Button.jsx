@@ -21,7 +21,7 @@ export const Button = ({
   fnArguments,
 }) => {
   const [toggle, setToggle] = useState(toggleInitialValue)
-  const iconClass = toggleIcon ? `fu__${icon}--${toggleInitialValue ? 'on' : 'off'}` : `fu__${icon}`
+  const iconClass = toggleIcon ? `fu__${icon}--${toggle ? 'on' : 'off'}` : `fu__${icon}`
 
   const onClick = useCallback(() => {
     setToggle((oldToggle) => !oldToggle)

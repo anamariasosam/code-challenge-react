@@ -1,5 +1,6 @@
 import { productsApi, PRODUCT_API, SERVER_STATUS } from './api'
 import { FILTER, PRODUCTS_ACTION, RESPONSE } from './constants'
+import { toLowerCase } from './searchUtils'
 
 export const calculateCartTotal = (list) => {
   return list.reduce((acc, { quantity }) => acc + quantity, 0)
@@ -33,22 +34,22 @@ export const changeProductQuantity = (oldProducts, { productId, increase = true 
 }
 
 export const transformProductsFromApi = (data) => {
-  return data.hits.map(({ main_image, name, vendor_inventory, id, manufacturer, ...rest }) => {
+  return data.hits.map(({ main_image, name, vendor_inventory, id, manufacturer, unit_name }) => {
+    const price = vendor_inventory[0].price ?? 0
+    const { name: manufacturerName, sku: manufacturerSku } = manufacturer
     return {
       id,
       name,
       image: main_image,
-      price: vendor_inventory[0].price,
-      manufacturerName: manufacturer.name,
-      manufacturerSku: manufacturer.sku,
+      price,
       quantity: 0,
       favorite: false,
-      // ...rest,
+      searchKeywords: toLowerCase([name, price, manufacturerName, manufacturerSku, unit_name]),
     }
   })
 }
 
-const filterProducts = (product, filter) => {
+const filterByType = (product, filter) => {
   if (filter === FILTER.FAVORITES) {
     return product.favorite === true
   } else if (filter === FILTER.CART_ITEMS) {
@@ -58,8 +59,29 @@ const filterProducts = (product, filter) => {
   return true
 }
 
-export const getGridProducts = (products, filter) => {
-  return products.filter((product) => filterProducts(product, filter))
+const searchProducts = (product, search) =>
+  product.searchKeywords.join(' ').includes(search.toLowerCase())
+
+const filterAndSearch = (product, search, filter) =>
+  filterByType(product, filter) && searchProducts(product, search)
+
+export const getGridProducts = (products, filter, search) => {
+  const searchNoEmpty = search.length > 0
+  if (searchNoEmpty) {
+    if (filter === FILTER.DEFAULT) {
+      // Only Search
+      return products.filter((product) => searchProducts(product, search))
+    } else {
+      // Filter And Search
+      return products.filter((product) => filterAndSearch(product, search, filter))
+    }
+  } else if (filter !== FILTER.DEFAULT) {
+    // Only Filter
+    return products.filter((product) => filterByType(product, filter))
+  }
+
+  // No Search and No Filter
+  return products
 }
 
 export const addToFavorites = async (dispatch, productId) => {
@@ -99,6 +121,7 @@ export const fetchProducts = async (dispatch) => {
       dispatch({ type: PRODUCTS_ACTION.API_RESPONSE, payload: { status: RESPONSE.REJECTED, data } })
     }
   } catch (error) {
+    console.error(error)
     dispatch({ type: PRODUCTS_ACTION.API_RESPONSE, payload: { status: RESPONSE.REJECTED, error } })
   }
 }

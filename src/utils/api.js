@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { products } from './productsList'
 
 export const PRODUCT_API = Object.freeze({
   url: 'https://demo5514996.mockable.io',
@@ -25,31 +24,17 @@ class Api {
 
   get = (resource) => {
     const id = resource ?? this.apiData.endpoints.default
-    // return this.productsApi.get(`${this.apiData.endpoints[id]}`);
-
-    return Promise.resolve({ data: products, status: SERVER_STATUS.OK })
+    return this.productsApi.get(`${this.apiData.endpoints[id]}`)
   }
 
   post = (resource, data) => {
     const id = resource ?? this.apiData.endpoints.default
-    // return this.productsApi.post(`${this.apiData.endpoints[id]}`, data)
-
-    return new Promise((res) => {
-      setTimeout(() => {
-        res({ data: { favorite: true }, status: SERVER_STATUS.OK })
-      }, 1000)
-    })
+    return this.productsApi.post(`${this.apiData.endpoints[id]}`, data)
   }
 
   delete = (resource, data) => {
     const id = resource ?? this.apiData.endpoints.default
-    // return this.productsApi.delete(`${this.apiData.endpoints[id]}`, data)
-
-    return new Promise((res) => {
-      setTimeout(() => {
-        res({ data: { favorite: false }, status: SERVER_STATUS.OK })
-      }, 2000)
-    })
+    return this.productsApi.delete(`${this.apiData.endpoints[id]}`, data)
   }
 }
 
