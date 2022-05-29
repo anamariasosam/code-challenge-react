@@ -1,0 +1,17 @@
+@use '../../../styles/palette' as *;
+@use '../../../styles/vars' as *;
+@import '../../../styles/functions';
+
+.cartBubble {
+  position: absolute;
+  top: calc-rem(-10px);
+  background: $sow_red_cart;
+  color: $sow_white;
+  font-style: normal;
+  border-radius: 50%;
+  width: calc-rem(18px);
+  height: calc-rem(18px);
+  font-weight: 500;
+  font-size: calc-rem(12px);
+  line-height: calc-rem(18px);
+}

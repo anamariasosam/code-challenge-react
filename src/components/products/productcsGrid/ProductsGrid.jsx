@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { RESPONSE } from '../../../utils/constants'
 import { StoreContext } from '../../../utils/StoreContext'
 import ProductCard from '../productCard/ProductCard'
 import './_ProductsGrid.scss'
@@ -14,7 +15,7 @@ const ProductsGridEmpty = ({ message }) => {
 const ProductsGrid = () => {
   const {
     status,
-    gridProducts: productsList,
+    gridProducts: products,
     addToCart,
     addToFavorites,
     removeFromFavorites,
@@ -33,10 +34,10 @@ const ProductsGrid = () => {
     },
   ]
 
-  if (status === 'resolved') {
-    return productsList.length > 0 ? (
+  if (status === RESPONSE.RESOLVED) {
+    return products.length > 0 ? (
       <div className="productsGrid">
-        {productsList.map((product) => {
+        {products.map((product) => {
           return (
             <ProductCard key={product.id} product={product}>
               <ProductCard.Options>{options}</ProductCard.Options>
@@ -47,7 +48,7 @@ const ProductsGrid = () => {
     ) : (
       <ProductsGridEmpty message="No products found." />
     )
-  } else if (status === 'rejected') {
+  } else if (status === RESPONSE.REJECTED) {
     return <ProductsGridEmpty message="Something happened trying to get the products." />
   }
 

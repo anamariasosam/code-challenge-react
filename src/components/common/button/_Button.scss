@@ -28,6 +28,10 @@ $button-border-width: calc-rem(2px);
     padding: calc-rem(8px);
   }
 
+  &__icons {
+    position: relative;
+  }
+
   &__primary {
     border: none;
     padding: calc-rem(8px) $default-size;

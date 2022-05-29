@@ -1,10 +1,10 @@
-import { Children, cloneElement } from 'react'
+import { Children, cloneElement, memo } from 'react'
 import { ButtonList } from '../../common/button/Button'
 import './_ProductCard.scss'
 
 const placeholderImgSrc = './images/product-placeholder.png'
 
-const ProductCard = ({ product: { image, price, name, id, favorite }, children }) => {
+const ProductCard = memo(({ product: { image, price, name, id, favorite }, children }) => {
   const imgSrc = image ?? placeholderImgSrc
   return (
     <figure className="productCard">
@@ -27,7 +27,7 @@ const ProductCard = ({ product: { image, price, name, id, favorite }, children }
       </figcaption>
     </figure>
   )
-}
+})
 
 ProductCard.Options = ButtonList
 ProductCard.displayName = 'ProductCard'

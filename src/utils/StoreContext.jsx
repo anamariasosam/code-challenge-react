@@ -1,132 +1,85 @@
-import { createContext, useEffect, useMemo, useRef, useState } from 'react'
+import { createContext, useEffect, useMemo, useState } from 'react'
 import { productsApi, PRODUCT_API, SERVER_STATUS } from './api'
+import { FILTER, RESPONSE } from './constants'
+import {
+  calculateCartTotal,
+  changeProductQuantity,
+  getGridProducts,
+  toggleProductFavoriteStatus,
+  transformProductsFromApi,
+} from './productsUtils'
 
 export const StoreContext = createContext()
 
-const calculateCartTotal = (cartItems) => {
-  return Object.values(cartItems).reduce((acc, { quantity }) => acc + quantity, 0)
-}
-
-const removeElementById = (list, idToDelete) => {
-  return list.filter((element) => element.id !== idToDelete)
-}
-
 export const StoreProvider = ({ children }) => {
-  const productsById = useRef({})
-  const [cartItems, setCartItems] = useState({})
-  const [favorites, setFavorites] = useState([])
-  const [state, setState] = useState({
-    status: 'pending',
-    title: '',
-    products: null,
-    error: null,
-  })
-  const cartTotal = useMemo(() => calculateCartTotal(cartItems), [cartItems])
+  const [status, setStatus] = useState(RESPONSE.PENDING)
+  const [products, setProducts] = useState([])
+  const cartTotal = useMemo(() => calculateCartTotal(products), [products])
+  const [filter, setFilter] = useState(FILTER.DEFAULT)
+  const [sectionTitle, setSectionTitle] = useState(FILTER.DEFAULT)
+  const gridProducts = useMemo(() => getGridProducts(products, filter), [products, filter])
 
   const addToCart = ({ productId }) => {
-    const product = productsById.current[productId]
-    const quantity = (cartItems[productId]?.quantity ?? 0) + 1
-    const updatedProduct = {
-      ...product,
-      quantity,
-    }
-    setCartItems((oldCartItems) => ({
-      ...oldCartItems,
-      [product.id]: updatedProduct,
-    }))
+    setProducts((oldProducts) => changeProductQuantity(oldProducts, productId))
   }
 
-  useEffect(() => {
-    console.log('get')
-    productsApi.get().then(({ data, status: serverStatus }) => {
-      if (serverStatus === SERVER_STATUS.OK) {
-        const products = data.hits.map(
-          ({ main_image, name, vendor_inventory, id, manufacturer, ...rest }) => {
-            const product = {
-              id,
-              name,
-              image: main_image,
-              price: vendor_inventory[0].price,
-              manufacturerName: manufacturer.name,
-              manufacturerSku: manufacturer.sku,
-              // ...rest,
-            }
-            productsById.current[id] = product
-            return product
-          }
-        )
-        setState({ status: 'resolved', products: products, title: 'Promos' })
-      } else {
-        setState({ status: 'rejected', error: data })
-      }
-    })
-  }, [])
+  const removeFromCart = ({ productId }) => {
+    setProducts((oldProducts) => changeProductQuantity(oldProducts, productId, -1))
+  }
 
   const addToFavorites = async ({ productId }) => {
-    const data = {
+    const { status, data: response } = await productsApi.post(PRODUCT_API.endpoints.favorites, {
       favorite: true,
-    }
-    const { status, data: response } = await productsApi.post(PRODUCT_API.endpoints.favorites, data)
-
-    const favProduct = productsById.current[productId]
-    favProduct.favorite = true
-    if (status === SERVER_STATUS.OK && response.favorite && favProduct) {
-      setFavorites((oldFavorites) => [...oldFavorites, favProduct])
+    })
+    if (status === SERVER_STATUS.OK && response.favorite) {
+      setProducts((oldProducts) => toggleProductFavoriteStatus(oldProducts, productId))
       return true
     }
-
     return false
   }
 
   const removeFromFavorites = async ({ productId }) => {
-    const data = {
-      favorite: true,
-    }
-    const { status, data: response } = await productsApi.post(PRODUCT_API.endpoints.favorites, data)
-
-    if (status === SERVER_STATUS.OK && response.favorite) {
-      const favProduct = productsById.current[productId]
-      favProduct.favorite = false
-      setFavorites(removeElementById(favorites, productId))
+    const { status, data: response } = await productsApi.delete(PRODUCT_API.endpoints.favorites, {
+      favorite: false,
+    })
+    if (status === SERVER_STATUS.OK && response.favorite === false) {
+      setProducts((oldProducts) => toggleProductFavoriteStatus(oldProducts, productId, false))
       return true
     }
-
     return false
   }
 
-  const changeGridView = (type) => {
-    const newView = Object.seal({
-      title: '',
-      products: null,
-    })
-
-    console.log(type)
-    if (type === 'favorites') {
-      newView.title = 'Favorites'
-      newView.products = favorites
-    } else if (type === 'cart') {
-      newView.title = 'Cart Items'
-      newView.products = Object.values(cartItems)
+  const handleProductsFromApi = async () => {
+    const { data, status: serverStatus } = await productsApi.get()
+    if (serverStatus === SERVER_STATUS.OK) {
+      setProducts(() => transformProductsFromApi(data))
+      setStatus(RESPONSE.RESOLVED)
     } else {
-      newView.title = 'Promos'
-      newView.products = Object.values(productsById.current)
+      setStatus(RESPONSE.REJECTED)
     }
-
-    setState({ status: 'resolved', ...newView })
   }
+
+  const changeGridView = (type) => {
+    setSectionTitle(type)
+    setFilter(type)
+  }
+
+  useEffect(() => {
+    console.log('get')
+    handleProductsFromApi()
+  }, [])
 
   return (
     <StoreContext.Provider
       value={{
-        status: state.status,
-        gridTitle: state.title,
-        gridProducts: state.products,
-        cartItems,
-        addToCart,
+        sectionTitle,
+        status,
         cartTotal,
+        gridProducts,
+        addToCart,
+        removeFromCart,
         addToFavorites,
         removeFromFavorites,
-        favorites,
         changeGridView,
       }}
     >

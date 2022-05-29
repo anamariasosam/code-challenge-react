@@ -3,9 +3,9 @@ import './_Button.scss'
 
 const handleOnClick = (toggle, onClickFn, toggleFn) => {
   if (toggle) {
-    return onClickFn
-  } else {
     return toggleFn ? toggleFn : onClickFn
+  } else {
+    return onClickFn
   }
 }
 
@@ -15,12 +15,11 @@ const handleToggleChange = (result, onToggleChangeCb, disabledCb) => {
   if (result !== undefined) {
     if (result instanceof Promise) {
       disabledCb(true)
-      onToggleChangeCb((oldToggle) => !oldToggle)
 
       // Wait until response to reflect the actual value
       result.then((value) => {
         disabledCb(false)
-        onToggleChangeCb((oldToggle) => getToggleValue(oldToggle, !value))
+        onToggleChangeCb((oldToggle) => getToggleValue(oldToggle, value))
       })
     } else {
       onToggleChangeCb((oldToggle) => getToggleValue(oldToggle, result))
@@ -40,9 +39,10 @@ export const Button = ({
   toggleIcon = true,
   initialToggle = true,
   fnArguments,
+  extraClass = '',
 }) => {
   const [toggle, setToggle] = useState(initialToggle)
-  const iconClass = toggleIcon ? `fu__${icon}--${toggle ? 'off' : 'on'}` : `fu__${icon}`
+  const iconClass = toggleIcon ? `fu__${icon}--${toggle ? 'on' : 'off'}` : `fu__${icon}`
   const [disabled, setDisabled] = useState()
   const onClick = useCallback(() => {
     handleToggleChange(
@@ -58,9 +58,11 @@ export const Button = ({
       onClick={onClick}
       className={`button ${type ? `button__${type}` : ''} ${icon ? 'button--icon' : ''}`}
     >
-      {icon && <i className={`fu ${iconClass}`}></i>}
+      <div className="button__icons">
+        {icon && <i className={`fu ${iconClass}`}></i>}
+        {children}
+      </div>
       {title}
-      {children}
     </button>
   )
 }

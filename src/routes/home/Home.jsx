@@ -4,10 +4,10 @@ import ProductsGrid from '../../components/products/productcsGrid/ProductsGrid'
 import { StoreContext } from '../../utils/StoreContext'
 
 const Home = () => {
-  const { gridTitle } = useContext(StoreContext)
+  const { sectionTitle } = useContext(StoreContext)
 
   return (
-    <Section title={gridTitle}>
+    <Section title={sectionTitle}>
       <ProductsGrid />
     </Section>
   )

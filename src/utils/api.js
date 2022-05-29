@@ -40,6 +40,17 @@ class Api {
       }, 1000)
     })
   }
+
+  delete = (resource, data) => {
+    const id = resource ?? this.apiData.endpoints.default
+    // return this.productsApi.delete(`${this.apiData.endpoints[id]}`, data)
+
+    return new Promise((res) => {
+      setTimeout(() => {
+        res({ data: { favorite: false }, status: SERVER_STATUS.OK })
+      }, 2000)
+    })
+  }
 }
 
 export const productsApi = new Api(PRODUCT_API)

@@ -29,12 +29,11 @@ $icons: (
   @include addIcon("sowingo-icon");
 
   &__favorite {
-
-    &,
     &--off {
       background-image: get-icon("favorite-border");
     }
 
+    &,
     &--on {
       background-image: get-icon("favorite-fill");
 
