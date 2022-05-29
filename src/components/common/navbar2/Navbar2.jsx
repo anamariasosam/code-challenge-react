@@ -4,7 +4,7 @@ import { useStore } from 'provider/StoreContext'
 import CartBubble from 'components/products/cartBubble/CartBubble'
 import { Button } from 'components/common/button/Button'
 import Searchbar from 'components/common/searchBar/SearchBar'
-import './_Navbar.scss'
+import './_Navbar2.scss'
 
 const Navbar = () => {
   const {
