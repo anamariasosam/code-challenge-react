@@ -1,5 +1,5 @@
-import { useContext } from 'react'
-import { RESPONSE } from '../../../utils/constants'
+import { useContext, useMemo } from 'react'
+import { FILTER, RESPONSE } from '../../../utils/constants'
 import { StoreContext } from '../../../utils/StoreContext'
 import ProductCard from '../productCard/ProductCard'
 import './_ProductsGrid.scss'
@@ -12,27 +12,64 @@ const ProductsGridEmpty = ({ message }) => {
     </div>
   )
 }
-const ProductsGrid = () => {
-  const {
-    status,
-    gridProducts: products,
-    addToCart,
-    addToFavorites,
-    removeFromFavorites,
-  } = useContext(StoreContext)
 
-  const options = [
+const getProductCardOptions = ({
+  sectionTitle,
+  addToCart,
+  addToFavorites,
+  removeFromFavorites,
+  removeFromCart,
+}) => {
+  const defaultOptions = [
     {
       onClick: addToFavorites,
       toggleFn: removeFromFavorites,
       icon: 'favorite',
     },
+  ]
+
+  if (sectionTitle === FILTER.CART_ITEMS) {
+    return [
+      ...defaultOptions,
+      {
+        onClick: removeFromCart,
+        title: 'Remove From Cart',
+        type: 'primary',
+      },
+    ]
+  }
+
+  return [
+    ...defaultOptions,
     {
       onClick: addToCart,
       title: 'Add To Cart',
       type: 'primary',
     },
   ]
+}
+
+const ProductsGrid = () => {
+  const {
+    sectionTitle,
+    status,
+    gridProducts: products,
+    addToCart,
+    addToFavorites,
+    removeFromFavorites,
+    removeFromCart,
+  } = useContext(StoreContext)
+  const options = useMemo(
+    () =>
+      getProductCardOptions({
+        sectionTitle,
+        addToCart,
+        addToFavorites,
+        removeFromFavorites,
+        removeFromCart,
+      }),
+    [addToCart, addToFavorites, removeFromCart, removeFromFavorites, sectionTitle]
+  )
 
   if (status === RESPONSE.RESOLVED) {
     return products.length > 0 ? (

@@ -16,7 +16,6 @@ export const StoreProvider = ({ children }) => {
   const [products, setProducts] = useState([])
   const cartTotal = useMemo(() => calculateCartTotal(products), [products])
   const [filter, setFilter] = useState(FILTER.DEFAULT)
-  const [sectionTitle, setSectionTitle] = useState(FILTER.DEFAULT)
   const gridProducts = useMemo(() => getGridProducts(products, filter), [products, filter])
 
   const addToCart = ({ productId }) => {
@@ -60,7 +59,6 @@ export const StoreProvider = ({ children }) => {
   }
 
   const changeGridView = (type) => {
-    setSectionTitle(type)
     setFilter(type)
   }
 
@@ -72,7 +70,7 @@ export const StoreProvider = ({ children }) => {
   return (
     <StoreContext.Provider
       value={{
-        sectionTitle,
+        sectionTitle: filter,
         status,
         cartTotal,
         gridProducts,
