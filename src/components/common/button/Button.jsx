@@ -1,31 +1,11 @@
 import { useCallback, useState } from 'react'
 import './_Button.scss'
 
-const handleOnClick = (toggle, onClickFn, toggleFn) => {
-  if (toggle) {
+const handleOnClick = (toggle, onClickFn, toggleFn, toggleInitialValue) => {
+  if (toggle && toggleInitialValue) {
     return toggleFn ? toggleFn : onClickFn
   } else {
     return onClickFn
-  }
-}
-
-const handleToggleChange = (result, onToggleChangeCb, disabledCb) => {
-  const getToggleValue = (oldToggle, value) => (value ? !oldToggle : oldToggle)
-
-  if (result !== undefined) {
-    if (result instanceof Promise) {
-      disabledCb(true)
-
-      // Wait until response to reflect the actual value
-      result.then((value) => {
-        disabledCb(false)
-        onToggleChangeCb((oldToggle) => getToggleValue(oldToggle, value))
-      })
-    } else {
-      onToggleChangeCb((oldToggle) => getToggleValue(oldToggle, result))
-    }
-  } else {
-    onToggleChangeCb((oldToggle) => !oldToggle)
   }
 }
 
@@ -37,24 +17,19 @@ export const Button = ({
   children,
   toggleFn,
   toggleIcon = true,
-  initialToggle = true,
+  toggleInitialValue = false,
   fnArguments,
-  extraClass = '',
 }) => {
-  const [toggle, setToggle] = useState(initialToggle)
-  const iconClass = toggleIcon ? `fu__${icon}--${toggle ? 'on' : 'off'}` : `fu__${icon}`
-  const [disabled, setDisabled] = useState()
+  const [toggle, setToggle] = useState(toggleInitialValue)
+  const iconClass = toggleIcon ? `fu__${icon}--${toggleInitialValue ? 'on' : 'off'}` : `fu__${icon}`
+
   const onClick = useCallback(() => {
-    handleToggleChange(
-      handleOnClick(toggle, onClickFn, toggleFn)(fnArguments),
-      setToggle,
-      setDisabled
-    )
-  }, [toggle, onClickFn, toggleFn, fnArguments])
+    setToggle((oldToggle) => !oldToggle)
+    handleOnClick(toggle, onClickFn, toggleFn, toggleInitialValue)(fnArguments)
+  }, [toggle, onClickFn, toggleFn, fnArguments, toggleInitialValue])
 
   return (
     <button
-      disabled={disabled}
       onClick={onClick}
       className={`button ${type ? `button__${type}` : ''} ${icon ? 'button--icon' : ''}`}
     >
@@ -67,7 +42,7 @@ export const Button = ({
   )
 }
 
-export const ButtonList = ({ children = [], fnArguments, initialToggle, extraClass }) => {
+export const ButtonList = ({ children = [], fnArguments, toggleInitialValue, extraClass }) => {
   return (
     <div className={`buttonList ${extraClass ?? ''}`}>
       {children.map(({ icon, title, type, onClick, toggleFn }) => {
@@ -79,7 +54,7 @@ export const ButtonList = ({ children = [], fnArguments, initialToggle, extraCla
             toggleFn={toggleFn ? toggleFn : null}
             type={type}
             fnArguments={fnArguments}
-            initialToggle={initialToggle}
+            toggleInitialValue={toggleInitialValue}
           >
             {title}
           </Button>

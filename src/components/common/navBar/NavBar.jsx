@@ -1,18 +1,16 @@
-import { useContext, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { FILTER } from 'utils/constants'
-import { StoreContext } from 'provider/StoreContext'
+import { useStore } from 'provider/StoreContext'
 import CartBubble from 'components/products/cartBubble/CartBubble'
 import { Button } from 'components/common/button/Button'
 import Searchbar from 'components/common/searchBar/SearchBar'
 import './_Navbar.scss'
 
 const Navbar = () => {
-  const { changeGridView } = useContext(StoreContext)
+  const {
+    state: { changeGridView, sectionTitle, filterBySearch },
+  } = useStore()
   const [activeTab, setActiveTab] = useState()
-
-  const searchItem = (e) => {
-    console.log(e)
-  }
 
   const navbarLinks = [
     {
@@ -35,27 +33,30 @@ const Navbar = () => {
     },
   ]
 
-  const handleTabChange = (filterBy, onClickFn, title) => {
-    if (activeTab === filterBy) {
-      onClickFn(FILTER.DEFAULT)
-      setActiveTab()
-      document.title = 'Sowingo | Interview Challenge'
-    } else {
-      onClickFn(filterBy)
-      setActiveTab(filterBy)
-      document.title = `Sowingo | ${title}`
-    }
-  }
+  const handleTabChange = useCallback(
+    (filterBy, onClickFn, title) => {
+      if (activeTab === filterBy) {
+        onClickFn(FILTER.DEFAULT)
+        setActiveTab()
+        document.title = 'Sowingo | Interview Challenge'
+      } else {
+        onClickFn(filterBy)
+        setActiveTab(filterBy)
+        document.title = `Sowingo | ${title}`
+      }
+    },
+    [activeTab]
+  )
 
   return (
     <nav className="navbar" role="navigation">
-      <Searchbar onSubmit={searchItem} onChange={searchItem}></Searchbar>
+      <Searchbar onChange={filterBySearch}></Searchbar>
       <ul className="navbar__links" role="menubar">
         {navbarLinks.map(({ icon, onClickFn, filterBy, title, children, extraClass }) => {
           return (
             <li
               key={icon}
-              className={`navbar__item ${activeTab === filterBy ? 'navbar__item--active' : ''}`}
+              className={`navbar__item ${sectionTitle === filterBy ? 'navbar__item--active' : ''}`}
               role="menuitem"
             >
               <Button

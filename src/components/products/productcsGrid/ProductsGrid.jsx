@@ -1,6 +1,6 @@
-import { useContext, useMemo } from 'react'
-import { FILTER, RESPONSE } from 'utils/constants'
-import { StoreContext } from 'provider/StoreContext'
+import { useMemo } from 'react'
+import { FILTER, PRODUCTS_ACTION, RESPONSE } from 'utils/constants'
+import { useStore, addToFavorites, removeFromFavorites } from 'provider/StoreContext'
 import ProductCard from '../productCard/ProductCard'
 import './_ProductsGrid.scss'
 
@@ -13,17 +13,27 @@ const ProductsGridEmpty = ({ message }) => {
   )
 }
 
-const getProductCardOptions = ({
-  sectionTitle,
-  addToCart,
-  addToFavorites,
-  removeFromFavorites,
-  removeFromCart,
-}) => {
+const getProductCardOptions = (sectionTitle, dispatch) => {
+  const addToFav = ({ productId }) => {
+    addToFavorites(dispatch, productId)
+  }
+
+  const removeFromFav = ({ productId }) => {
+    removeFromFavorites(dispatch, productId)
+  }
+
+  const addToCart = ({ productId }) => {
+    dispatch({ type: PRODUCTS_ACTION.MODIFY_CART, payload: { productId, increase: true } })
+  }
+
+  const removeFromCart = ({ productId }) => {
+    dispatch({ type: PRODUCTS_ACTION.MODIFY_CART, payload: { productId, increase: false } })
+  }
+
   const defaultOptions = [
     {
-      onClick: addToFavorites,
-      toggleFn: removeFromFavorites,
+      onClick: addToFav,
+      toggleFn: removeFromFav,
       icon: 'favorite',
     },
   ]
@@ -51,24 +61,13 @@ const getProductCardOptions = ({
 
 const ProductsGrid = () => {
   const {
-    sectionTitle,
-    status,
-    gridProducts: products,
-    addToCart,
-    addToFavorites,
-    removeFromFavorites,
-    removeFromCart,
-  } = useContext(StoreContext)
+    state: { sectionTitle, status, gridProducts: products },
+    dispatch,
+  } = useStore()
+
   const options = useMemo(
-    () =>
-      getProductCardOptions({
-        sectionTitle,
-        addToCart,
-        addToFavorites,
-        removeFromFavorites,
-        removeFromCart,
-      }),
-    [addToCart, addToFavorites, removeFromCart, removeFromFavorites, sectionTitle]
+    () => getProductCardOptions(sectionTitle, dispatch),
+    [dispatch, sectionTitle]
   )
 
   if (status === RESPONSE.RESOLVED) {

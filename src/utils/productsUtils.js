@@ -1,10 +1,11 @@
-import { FILTER } from './constants'
+import { productsApi, PRODUCT_API, SERVER_STATUS } from './api'
+import { FILTER, PRODUCTS_ACTION, RESPONSE } from './constants'
 
 export const calculateCartTotal = (list) => {
   return list.reduce((acc, { quantity }) => acc + quantity, 0)
 }
 
-export const toggleProductFavoriteStatus = (oldProducts, productId, favorite = true) => {
+export const toggleProductFavoriteStatus = (oldProducts, { productId, favorite = true }) => {
   return oldProducts.map((product) => {
     if (product.id === productId) {
       return {
@@ -17,10 +18,10 @@ export const toggleProductFavoriteStatus = (oldProducts, productId, favorite = t
   })
 }
 
-export const changeProductQuantity = (oldProducts, productId, delta = 1) => {
+export const changeProductQuantity = (oldProducts, { productId, increase = true }) => {
   return oldProducts.map((product) => {
     if (product.id === productId) {
-      const quantity = (product.quantity ?? 0) + delta
+      const quantity = (product.quantity ?? 0) + (increase ? 1 : -1)
       return {
         ...product,
         quantity,
@@ -59,4 +60,45 @@ const filterProducts = (product, filter) => {
 
 export const getGridProducts = (products, filter) => {
   return products.filter((product) => filterProducts(product, filter))
+}
+
+export const addToFavorites = async (dispatch, productId) => {
+  const { status, data: response } = await productsApi.post(PRODUCT_API.endpoints.favorites, {
+    favorite: true,
+  })
+  if (status === SERVER_STATUS.OK && response.favorite) {
+    dispatch({ type: PRODUCTS_ACTION.CHANGE_FAVORITE, payload: { productId, favorite: true } })
+  } else {
+    dispatch({ type: PRODUCTS_ACTION.INITAL_STATE })
+  }
+}
+
+export const removeFromFavorites = async (dispatch, productId) => {
+  const { status, data: response } = await productsApi.delete(PRODUCT_API.endpoints.favorites, {
+    favorite: false,
+  })
+
+  if (status === SERVER_STATUS.OK && response.favorite === false) {
+    dispatch({ type: PRODUCTS_ACTION.CHANGE_FAVORITE, payload: { productId, favorite: false } })
+  } else {
+    dispatch({ type: PRODUCTS_ACTION.INITAL_STATE })
+  }
+}
+
+export const fetchProducts = async (dispatch) => {
+  dispatch({ type: PRODUCTS_ACTION.API_RESPONSE, payload: { status: RESPONSE.PENDING } })
+  try {
+    const { data, status: serverStatus } = await productsApi.get()
+    if (serverStatus === SERVER_STATUS.OK) {
+      const products = transformProductsFromApi(data)
+      dispatch({
+        type: PRODUCTS_ACTION.API_RESPONSE,
+        payload: { status: RESPONSE.RESOLVED, products },
+      })
+    } else {
+      dispatch({ type: PRODUCTS_ACTION.API_RESPONSE, payload: { status: RESPONSE.REJECTED, data } })
+    }
+  } catch (error) {
+    dispatch({ type: PRODUCTS_ACTION.API_RESPONSE, payload: { status: RESPONSE.REJECTED, error } })
+  }
 }

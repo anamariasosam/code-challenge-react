@@ -1,3 +1,4 @@
+import { debounce } from 'utils/searchUtils'
 import './Searchbar.scss'
 
 const Searchbar = ({ onChange }) => {
@@ -8,7 +9,7 @@ const Searchbar = ({ onChange }) => {
         type="text"
         className="searchbar__input"
         name="searchText"
-        onChange={onChange}
+        onChange={debounce((e) => onChange(e.target.value))}
         aria-label="Search by product name, manufacturer, SKU or keyword"
         placeholder="Search by product name, manufacturer, SKU, keyword..."
       />

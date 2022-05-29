@@ -3,7 +3,7 @@ import Home from 'routes/home/Home'
 import { StoreProvider } from 'provider/StoreContext'
 import './_styles.scss'
 
-function App() {
+const App = () => {
   return (
     <StoreProvider>
       <BaseLayout>

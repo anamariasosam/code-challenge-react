@@ -34,13 +34,8 @@
       width: 100%;
     }
 
-    &:nth-child(1)#{$self}--active {
-      margin-right: calc-rem(1px);
-    }
-
-    &--active {
-      border: calc-rem(2px) solid $sow_grey_6;
-      outline: none;
+    &--active .button {
+      background-color: $border-color;
     }
   }
 

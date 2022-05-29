@@ -1,86 +1,80 @@
-import { createContext, useEffect, useMemo, useState } from 'react'
-import { productsApi, PRODUCT_API, SERVER_STATUS } from 'utils/api'
-import { FILTER, RESPONSE } from 'utils/constants'
+import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
+import { FILTER, PRODUCTS_ACTION } from 'utils/constants'
 import {
   calculateCartTotal,
   changeProductQuantity,
+  fetchProducts,
   getGridProducts,
   toggleProductFavoriteStatus,
-  transformProductsFromApi,
+  addToFavorites,
+  removeFromFavorites,
 } from 'utils/productsUtils'
 
-export const StoreContext = createContext()
+const StoreContext = createContext()
 
-export const StoreProvider = ({ children }) => {
-  const [status, setStatus] = useState(RESPONSE.PENDING)
-  const [products, setProducts] = useState([])
+const productsReducer = (state, action) => {
+  switch (action.type) {
+    case PRODUCTS_ACTION.API_RESPONSE: {
+      return { ...state, ...action.payload }
+    }
+    case PRODUCTS_ACTION.MODIFY_CART: {
+      return { ...state, products: changeProductQuantity(state.products, action.payload) }
+    }
+    case PRODUCTS_ACTION.CHANGE_FAVORITE: {
+      return { ...state, products: toggleProductFavoriteStatus(state.products, action.payload) }
+    }
+    default: {
+      return { ...state }
+    }
+  }
+}
+
+const StoreProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(productsReducer, {
+    products: [],
+  })
   const [filter, setFilter] = useState(FILTER.DEFAULT)
-  const cartTotal = useMemo(() => calculateCartTotal(products), [products])
-  const gridProducts = useMemo(() => getGridProducts(products, filter), [products, filter])
+  const cartTotal = useMemo(() => calculateCartTotal(state.products), [state.products])
+  const gridProducts = useMemo(
+    () => getGridProducts(state.products, filter),
+    [state.products, filter]
+  )
 
-  const addToCart = ({ productId }) => {
-    setProducts((oldProducts) => changeProductQuantity(oldProducts, productId))
-  }
-
-  const removeFromCart = ({ productId }) => {
-    setProducts((oldProducts) => changeProductQuantity(oldProducts, productId, -1))
-  }
-
-  const addToFavorites = async ({ productId }) => {
-    const { status, data: response } = await productsApi.post(PRODUCT_API.endpoints.favorites, {
-      favorite: true,
-    })
-    if (status === SERVER_STATUS.OK && response.favorite) {
-      setProducts((oldProducts) => toggleProductFavoriteStatus(oldProducts, productId))
-      return true
-    }
-    return false
-  }
-
-  const removeFromFavorites = async ({ productId }) => {
-    const { status, data: response } = await productsApi.delete(PRODUCT_API.endpoints.favorites, {
-      favorite: false,
-    })
-    if (status === SERVER_STATUS.OK && response.favorite === false) {
-      setProducts((oldProducts) => toggleProductFavoriteStatus(oldProducts, productId, false))
-      return true
-    }
-    return false
-  }
-
-  const handleProductsFromApi = async () => {
-    const { data, status: serverStatus } = await productsApi.get()
-    if (serverStatus === SERVER_STATUS.OK) {
-      setProducts(() => transformProductsFromApi(data))
-      setStatus(RESPONSE.RESOLVED)
-    } else {
-      setStatus(RESPONSE.REJECTED)
-    }
-  }
+  useEffect(() => {
+    fetchProducts(dispatch)
+  }, [])
 
   const changeGridView = (type) => {
     setFilter(type)
   }
 
-  useEffect(() => {
-    handleProductsFromApi()
-  }, [])
+  const filterBySearch = (searchKeyWord) => {
+    console.log('handle search')
+    console.log(searchKeyWord)
+    console.log(state.products)
+  }
 
-  return (
-    <StoreContext.Provider
-      value={{
-        sectionTitle: filter,
-        status,
-        cartTotal,
-        gridProducts,
-        addToCart,
-        removeFromCart,
-        addToFavorites,
-        removeFromFavorites,
-        changeGridView,
-      }}
-    >
-      {children}
-    </StoreContext.Provider>
-  )
+  const value = {
+    state: {
+      sectionTitle: filter,
+      ...state,
+      cartTotal,
+      gridProducts,
+      changeGridView,
+      filterBySearch,
+    },
+    dispatch,
+  }
+
+  return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
 }
+
+const useStore = () => {
+  const context = useContext(StoreContext)
+  if (context === undefined) {
+    throw new Error('useStore must be used within a StoreProvider')
+  }
+  return context
+}
+
+export { StoreProvider, useStore, addToFavorites, removeFromFavorites }

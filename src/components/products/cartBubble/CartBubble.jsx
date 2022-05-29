@@ -1,9 +1,10 @@
-import { useContext } from 'react'
-import { StoreContext } from 'provider/StoreContext'
+import { useStore } from 'provider/StoreContext'
 import './_CartBubble.scss'
 
 const CartBubble = () => {
-  const { cartTotal } = useContext(StoreContext)
+  const {
+    state: { cartTotal },
+  } = useStore()
 
   return <i className="cartBubble">{cartTotal}</i>
 }

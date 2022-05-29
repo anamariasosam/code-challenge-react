@@ -9,3 +9,10 @@ export const FILTER = Object.freeze({
   CART_ITEMS: 'cart',
   DEFAULT: 'promos',
 })
+
+export const PRODUCTS_ACTION = Object.freeze({
+  MODIFY_CART: 'MODIFY_CART',
+  CHANGE_FAVORITE: 'CHANGE_FAVORITE',
+  INITAL_STATE: 'INITAL_STATE',
+  API_RESPONSE: 'apiResponse',
+})

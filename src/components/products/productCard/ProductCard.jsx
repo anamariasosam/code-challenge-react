@@ -20,7 +20,7 @@ const ProductCard = memo(({ product: { image, price, name, id, favorite }, child
             fnArguments: {
               productId: id,
             },
-            initialToggle: favorite,
+            toggleInitialValue: favorite,
             extraClass: 'productCard__buttons',
           })
         )}
