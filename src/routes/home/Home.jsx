@@ -1,7 +1,7 @@
 import { useContext } from 'react'
-import Section from '../../components/common/layouts/section/Section'
-import ProductsGrid from '../../components/products/productcsGrid/ProductsGrid'
-import { StoreContext } from '../../utils/StoreContext'
+import Section from 'components/common/layouts/section/Section'
+import ProductsGrid from 'components/products/productcsGrid/ProductsGrid'
+import { StoreContext } from 'provider/StoreContext'
 
 const Home = () => {
   const { sectionTitle } = useContext(StoreContext)

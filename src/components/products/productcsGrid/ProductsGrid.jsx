@@ -1,6 +1,6 @@
 import { useContext, useMemo } from 'react'
-import { FILTER, RESPONSE } from '../../../utils/constants'
-import { StoreContext } from '../../../utils/StoreContext'
+import { FILTER, RESPONSE } from 'utils/constants'
+import { StoreContext } from 'provider/StoreContext'
 import ProductCard from '../productCard/ProductCard'
 import './_ProductsGrid.scss'
 

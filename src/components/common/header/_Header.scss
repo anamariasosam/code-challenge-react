@@ -1,5 +1,5 @@
-@use '../../../styles/palette' as *;
-@import '../../../styles/functions';
+@use 'styles/palette' as *;
+@import 'styles/functions';
 
 .header {
   @include layout-offest(27px, 25px);

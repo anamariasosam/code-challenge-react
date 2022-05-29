@@ -3,7 +3,7 @@
 }
 
 @function get-icon($icon-name) {
-  $iconsUrl: "../static/icons/";
+  $iconsUrl: "/static/icons/";
   @return url($iconsUrl + $icon-name + ".svg")
 }
 

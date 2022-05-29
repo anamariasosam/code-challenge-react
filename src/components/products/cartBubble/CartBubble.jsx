@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { StoreContext } from '../../../utils/StoreContext'
+import { StoreContext } from 'provider/StoreContext'
 import './_CartBubble.scss'
 
 const CartBubble = () => {

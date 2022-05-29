@@ -1,5 +1,5 @@
 import { Children, cloneElement, memo } from 'react'
-import { ButtonList } from '../../common/button/Button'
+import { ButtonList } from 'components/common/button/Button'
 import './_ProductCard.scss'
 
 const placeholderImgSrc = './images/product-placeholder.png'

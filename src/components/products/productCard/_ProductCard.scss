@@ -1,6 +1,6 @@
-@use '../../../styles/palette' as *;
-@use '../../../styles/vars' as *;
-@import '../../../styles/functions';
+@use 'styles/palette' as *;
+@use 'styles/vars' as *;
+@import 'styles/functions';
 
 $border-width: calc-rem(1px);
 
@@ -81,6 +81,14 @@ $border-width: calc-rem(1px);
   &__buttons {
     justify-content: flex-end;
     margin-top: calc-rem(24px);
-    gap: $default-size
+    gap: $default-size;
+
+    & .button {
+      &:active {
+        background: $sow_grey_6;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24);
+        transform: translateY(-1px);
+      }
+    }
   }
 }

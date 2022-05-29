@@ -1,6 +1,6 @@
-@use '../../../styles/palette' as *;
-@use '../../../styles/vars' as *;
-@import '../../../styles/functions';
+@use 'styles/palette' as *;
+@use 'styles/vars' as *;
+@import 'styles/functions';
 
 .cartBubble {
   position: absolute;

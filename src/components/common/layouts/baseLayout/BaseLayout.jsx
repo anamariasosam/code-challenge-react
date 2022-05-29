@@ -1,5 +1,5 @@
-import Header from '../../header/Header'
-import Navbar from '../../navbar/Navbar'
+import Header from 'components/common/header/Header'
+import Navbar from 'components/common/navbar/Navbar'
 import './_BaseLayout.scss'
 
 const BaseLayout = ({ children }) => {

@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react'
-import { FILTER } from '../../../utils/constants'
-import { StoreContext } from '../../../utils/StoreContext'
-import CartBubble from '../../products/cartBubble/CartBubble'
-import { Button } from '../button/Button'
-import Searchbar from '../searchBar/SearchBar'
+import { FILTER } from 'utils/constants'
+import { StoreContext } from 'provider/StoreContext'
+import CartBubble from 'components/products/cartBubble/CartBubble'
+import { Button } from 'components/common/button/Button'
+import Searchbar from 'components/common/searchBar/SearchBar'
 import './_Navbar.scss'
 
 const Navbar = () => {

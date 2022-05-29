@@ -1,7 +1,6 @@
-// import Cart from './components/cart/Cart'
-import BaseLayout from './components/common/layouts/baseLayout/BaseLayout'
-import Home from './routes/home/Home'
-import { StoreProvider } from './utils/StoreContext'
+import BaseLayout from 'components/common/layouts/baseLayout/BaseLayout'
+import Home from 'routes/home/Home'
+import { StoreProvider } from 'provider/StoreContext'
 import './_styles.scss'
 
 function App() {

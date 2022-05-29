@@ -1,21 +1,21 @@
 import { createContext, useEffect, useMemo, useState } from 'react'
-import { productsApi, PRODUCT_API, SERVER_STATUS } from './api'
-import { FILTER, RESPONSE } from './constants'
+import { productsApi, PRODUCT_API, SERVER_STATUS } from 'utils/api'
+import { FILTER, RESPONSE } from 'utils/constants'
 import {
   calculateCartTotal,
   changeProductQuantity,
   getGridProducts,
   toggleProductFavoriteStatus,
   transformProductsFromApi,
-} from './productsUtils'
+} from 'utils/productsUtils'
 
 export const StoreContext = createContext()
 
 export const StoreProvider = ({ children }) => {
   const [status, setStatus] = useState(RESPONSE.PENDING)
   const [products, setProducts] = useState([])
-  const cartTotal = useMemo(() => calculateCartTotal(products), [products])
   const [filter, setFilter] = useState(FILTER.DEFAULT)
+  const cartTotal = useMemo(() => calculateCartTotal(products), [products])
   const gridProducts = useMemo(() => getGridProducts(products, filter), [products, filter])
 
   const addToCart = ({ productId }) => {
@@ -63,7 +63,6 @@ export const StoreProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    console.log('get')
     handleProductsFromApi()
   }, [])
 

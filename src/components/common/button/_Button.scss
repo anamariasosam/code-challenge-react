@@ -1,6 +1,6 @@
-@use '../../../styles/palette' as *;
-@use '../../../styles/vars' as *;
-@import '../../../styles/functions';
+@use 'styles/palette' as *;
+@use 'styles/vars' as *;
+@import 'styles/functions';
 
 $button-border-width: calc-rem(2px);
 
@@ -48,5 +48,4 @@ $button-border-width: calc-rem(2px);
     flex-wrap: wrap;
 
   }
-
 }
