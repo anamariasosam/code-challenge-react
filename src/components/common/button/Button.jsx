@@ -19,6 +19,7 @@ export const Button = ({
   toggleIcon = true,
   toggleInitialValue = false,
   fnArguments,
+  name,
 }) => {
   const [toggle, setToggle] = useState(toggleInitialValue)
   const iconClass = toggleIcon ? `fu__${icon}--${toggle ? 'on' : 'off'}` : `fu__${icon}`
@@ -30,6 +31,7 @@ export const Button = ({
 
   return (
     <button
+      aria-label={name}
       onClick={onClick}
       className={`button ${type ? `button__${type}` : ''} ${icon ? 'button--icon' : ''}`}
     >
@@ -45,9 +47,10 @@ export const Button = ({
 export const ButtonList = ({ children = [], fnArguments, toggleInitialValue, extraClass }) => {
   return (
     <div className={`buttonList ${extraClass ?? ''}`}>
-      {children.map(({ icon, title, type, onClick, toggleFn }) => {
+      {children.map(({ icon, title, type, onClick, toggleFn, name }) => {
         return (
           <Button
+            name={name}
             key={onClick.name}
             onClickFn={onClick}
             icon={icon}

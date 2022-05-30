@@ -13,7 +13,7 @@ const ProductCard = memo(({ product: { image, price, name, id, favorite }, child
         <p className="productCard__title">{name}</p>
         <div className="productCard__box">
           <p className="productCard__text">Your Price</p>
-          <p className="productCard__price">${price}</p>
+          <p className="productCard__price">{`$${price}`}</p>
         </div>
         {Children.map(children, (child) =>
           cloneElement(child, {

@@ -35,6 +35,7 @@ const getProductCardOptions = (sectionTitle, dispatch) => {
       onClick: addToFav,
       toggleFn: removeFromFav,
       icon: 'favorite',
+      name: 'toggle favorite',
     },
   ]
 
@@ -45,6 +46,7 @@ const getProductCardOptions = (sectionTitle, dispatch) => {
         onClick: removeFromCart,
         title: 'Remove From Cart',
         type: 'primary',
+        name: 'remove from cart',
       },
     ]
   }
@@ -55,6 +57,7 @@ const getProductCardOptions = (sectionTitle, dispatch) => {
       onClick: addToCart,
       title: 'Add To Cart',
       type: 'primary',
+      name: 'add to cart',
     },
   ]
 }
