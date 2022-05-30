@@ -48,6 +48,7 @@ const StoreProvider = ({ children }) => {
 
   const changeGridView = (type) => {
     setFilter(type)
+    document.title = `Sowingo | ${type.toUpperCase()}`
   }
 
   const filterBySearch = (searchKeyWord) => {

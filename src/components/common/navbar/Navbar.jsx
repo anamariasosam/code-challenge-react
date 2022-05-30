@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { FILTER } from 'utils/constants'
 import { useStore } from 'provider/StoreContext'
 import CartBubble from 'components/products/cartBubble/CartBubble'
@@ -10,7 +10,6 @@ const Navbar = () => {
   const {
     state: { changeGridView, sectionTitle, filterBySearch },
   } = useStore()
-  const [activeTab, setActiveTab] = useState()
 
   const navbarLinks = [
     {
@@ -19,8 +18,6 @@ const Navbar = () => {
       name: 'Go to favorites',
       filterBy: FILTER.FAVORITES,
       onClickFn: changeGridView,
-      toggleFn: changeGridView,
-      toggleIcon: false,
     },
     {
       title: 'Cart',
@@ -28,27 +25,18 @@ const Navbar = () => {
       name: 'Go to Cart Items',
       filterBy: FILTER.CART_ITEMS,
       onClickFn: changeGridView,
-      toggleFn: changeGridView,
       extraClass: 'button--dynamicIcon',
-      toggleIcon: false,
       children: <CartBubble />,
     },
   ]
 
-  const handleTabChange = useCallback(
-    (filterBy, onClickFn, title) => {
-      if (activeTab === filterBy) {
-        onClickFn(FILTER.DEFAULT)
-        setActiveTab()
-        document.title = 'Sowingo | Interview Challenge'
-      } else {
-        onClickFn(filterBy)
-        setActiveTab(filterBy)
-        document.title = `Sowingo | ${title}`
-      }
-    },
-    [activeTab]
-  )
+  const handleTabChange = useCallback((filterBy, onClickFn, sectionTitle) => {
+    if (filterBy.toLowerCase() === sectionTitle.toLowerCase()) {
+      onClickFn(FILTER.DEFAULT)
+    } else {
+      onClickFn(filterBy)
+    }
+  }, [])
 
   return (
     <nav className="navbar" role="navigation">
@@ -62,7 +50,7 @@ const Navbar = () => {
               role="menuitem"
             >
               <Button
-                onClickFn={() => handleTabChange(filterBy, onClickFn, title)}
+                onClickFn={() => handleTabChange(filterBy, onClickFn, sectionTitle)}
                 icon={icon}
                 toggleIcon={false}
                 title={title}
