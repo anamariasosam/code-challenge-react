@@ -16,3 +16,17 @@ export const PRODUCTS_ACTION = Object.freeze({
   INITAL_STATE: 'INITAL_STATE',
   API_RESPONSE: 'apiResponse',
 })
+
+export const SERVER_STATUS = {
+  OK: 200,
+  NOT_FOUND: 404,
+}
+
+export const PRODUCT_API = Object.freeze({
+  url: 'https://demo5514996.mockable.io',
+  endpoints: {
+    default: 'products',
+    products: 'products',
+    favorites: 'favorites',
+  },
+})

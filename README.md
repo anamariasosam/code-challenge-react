@@ -67,3 +67,7 @@ npm test
 ## 3. Architecture Implemented: Provider Pattern
 
 ![Provider Patter](docs/providerPattern.svg)
+
+## 4. Coverage
+
+![Coverage](docs/coverage.png)

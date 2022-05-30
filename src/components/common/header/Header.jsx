@@ -15,7 +15,7 @@ const Header = () => {
       <img
         className="header__logo"
         src="images/sowingo_logo.svg"
-        alt="sowing logo"
+        alt="sowingo logo"
         onClick={goToHome}
       />
     </header>

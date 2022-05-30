@@ -1,5 +1,5 @@
-import { productsApi, PRODUCT_API, SERVER_STATUS } from './api'
-import { FILTER, PRODUCTS_ACTION, RESPONSE } from './constants'
+import { productsApi } from './api'
+import { FILTER, PRODUCTS_ACTION, PRODUCT_API, RESPONSE, SERVER_STATUS } from './constants'
 import { toLowerCase } from './searchUtils'
 
 export const calculateCartTotal = (list) => {

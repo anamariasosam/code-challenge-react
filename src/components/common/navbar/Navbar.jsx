@@ -16,6 +16,7 @@ const Navbar = () => {
     {
       title: 'Favourites',
       icon: 'favorite',
+      name: 'Go to favorites',
       filterBy: FILTER.FAVORITES,
       onClickFn: changeGridView,
       toggleFn: changeGridView,
@@ -24,6 +25,7 @@ const Navbar = () => {
     {
       title: 'Cart',
       icon: 'cart',
+      name: 'Go to Cart Items',
       filterBy: FILTER.CART_ITEMS,
       onClickFn: changeGridView,
       toggleFn: changeGridView,
@@ -52,7 +54,7 @@ const Navbar = () => {
     <nav className="navbar" role="navigation">
       <Searchbar onChange={filterBySearch}></Searchbar>
       <ul className="navbar__links" role="menubar">
-        {navbarLinks.map(({ icon, onClickFn, filterBy, title, children, extraClass }) => {
+        {navbarLinks.map(({ icon, onClickFn, filterBy, title, children, extraClass, name }) => {
           return (
             <li
               key={icon}
@@ -65,6 +67,7 @@ const Navbar = () => {
                 toggleIcon={false}
                 title={title}
                 extraClass={extraClass}
+                name={name}
               >
                 {children}
               </Button>

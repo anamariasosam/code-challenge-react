@@ -6,7 +6,11 @@ const CartBubble = () => {
     state: { cartTotal },
   } = useStore()
 
-  return <i className="cartBubble">{cartTotal}</i>
+  return (
+    <i className="cartBubble" data-testid="cartBubble">
+      {cartTotal}
+    </i>
+  )
 }
 
 export default CartBubble

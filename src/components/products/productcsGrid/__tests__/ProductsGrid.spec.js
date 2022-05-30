@@ -1,9 +1,10 @@
+/* eslint-disable jest/no-mocks-import */
 /* eslint-disable testing-library/no-node-access */
 import { fireEvent, render, screen } from '@testing-library/react'
 import { RESPONSE } from 'utils/constants'
 import { transformProductsFromApi } from 'utils/productsUtils'
 import ProductsGrid from '../ProductsGrid'
-import { mockedProducts } from 'utils/mockedProducts'
+import { mockedProducts } from 'utils/__mocks__/mockedProducts'
 import * as StoreContext from 'provider/StoreContext'
 
 const mockGridProducts = transformProductsFromApi(mockedProducts)
@@ -14,7 +15,7 @@ jest.mock('provider/StoreContext', () => {
   return {
     useStore: () => {
       return {
-        state: { sectionTitle: 'Promo', status: mockResolved, gridProducts: mockGridProducts },
+        state: { sectionTitle: 'Promo', status: mockResolved, gridProducts: [mockGridProducts[0]] },
         dispatch: mockDispatch,
       }
     },
@@ -30,7 +31,7 @@ describe('ProductsGrid', () => {
   it('should display a product', () => {
     setup()
     const product = {
-      name: '2% Xylocaine Dental with Epinephrine',
+      name: '2% Xylocaine Dental with Epinephrine Lidocaine HCl, 50/Pkg 1:50,000, NDC 66312-0181-16',
       price: '$40.1',
     }
     expect(screen.getAllByText('Add To Cart').length).toBe(1)
